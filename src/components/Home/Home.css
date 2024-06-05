@@ -1,0 +1,17 @@
+.bg-image {
+  /* background-image: url(); */
+  background-color: aquamarine;
+  height: 564px;
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+}
+
+.x-btn {
+  width: 51px !important;
+  height: 51px !important;
+}
+
+.blue-btn {
+  width: 81px !important;
+  height: 81px !important;
+}
