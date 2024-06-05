@@ -35,7 +35,7 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <body className="d-flex justify-content-center main-dark-background min-vh-100">
+    <main className="d-flex justify-content-center main-dark-background min-vh-100">
       <section className="d-flex justify-content-center align-items-center flex-column">
         <h1 className="DMSans main-ligth-text fw-bold mb-3">SignUp</h1>
         <h6 className="text-center Epilogue main-ligth-text fw-light w-75 mb-3">
@@ -80,7 +80,7 @@ const SignUp: React.FC = () => {
           </button>
         </form>
       </section>
-    </body>
+    </main>
   );
 };
 

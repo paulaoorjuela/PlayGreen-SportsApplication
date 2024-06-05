@@ -1,0 +1,10 @@
+.sport-card{
+    width: 90%;
+    height: 77px;
+}
+
+.sport-img {
+  /* background-image: url(); */
+    background-color: aquamarine;
+    width: 80%;
+}

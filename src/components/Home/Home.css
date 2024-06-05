@@ -1,7 +1,10 @@
 .bg-image {
   /* background-image: url(); */
-  background-color: aquamarine;
-  height: 564px;
+  /* background-color: aquamarine; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-x: center;
+  height: 564px !important;
   border-bottom-left-radius: 32px;
   border-bottom-right-radius: 32px;
 }
@@ -11,7 +14,19 @@
   height: 51px !important;
 }
 
-.blue-btn {
+.like-btn {
   width: 81px !important;
   height: 81px !important;
+  background: linear-gradient(99deg, #236bfe 6.69%, #0d4ed3 80.95%);
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.like-btn:hover {
+  box-shadow: 7px 5px 56px -14px #236bfe;
+}
+
+.blue-btn:active {
+  transform: scale(0.97);
+  box-shadow: 7px 5px 56px -10px #236bfe;
 }
