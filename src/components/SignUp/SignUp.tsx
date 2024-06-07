@@ -65,6 +65,7 @@ const SignUp: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          <p className="pass-warning main-ligth-text">password must have at least 6 characters</p>
           <a
             href="/"
             className="DMSans main-ligth-text aready-have mb-3 text-decoration-none"

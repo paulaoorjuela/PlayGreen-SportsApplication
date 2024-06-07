@@ -3,3 +3,7 @@
     height: 56px  !important;
     border-radius: 25px !important;
   }
+
+.pass-warning{
+  font-size: 12px;
+}
