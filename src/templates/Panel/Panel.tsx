@@ -18,7 +18,7 @@ const Panel: React.FC = () => {
   };
 
   return (
-    <section className="d-flex flex-row justify-content-between align-items-center secondary-dark-background rounded-4 panel mt-auto mx-auto mb-4 px-4 fixed-bottom">
+    <section className="d-flex flex-row justify-content-between align-items-center secondary-dark-background rounded-4 panel mt-auto mx-auto mb-4 px-4">
       <Link to="/home">
         <button
           className={`border-0 rounded-4 p-3 ${
