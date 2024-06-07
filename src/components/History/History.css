@@ -1,10 +1,16 @@
+.main-history-page{
+    padding-bottom: 120px;
+}
+
 .sport-card{
     width: 90%;
     height: 77px;
 }
 
 .sport-img {
-  /* background-image: url(); */
-    background-color: aquamarine;
     width: 80%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
 }

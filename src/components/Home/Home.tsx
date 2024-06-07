@@ -21,10 +21,14 @@ const Home: React.FC = () => {
   useEffect(() => {
     const getSportsInfo = async () => {
       try {
-        const sportsData = await fetchApi(sports.map(sport => sport.idSport));
+        const sportsData = await fetchApi(sports.map((sport) => sport.idSport));
         if (Array.isArray(sportsData)) {
           setSports(sportsData);
-        } else if (sportsData && sportsData.sports && Array.isArray(sportsData.sports)) {
+        } else if (
+          sportsData &&
+          sportsData.sports &&
+          Array.isArray(sportsData.sports)
+        ) {
           // Handle case where data has a nested structure
           setSports(sportsData.sports);
         } else {
@@ -42,22 +46,24 @@ const Home: React.FC = () => {
     getSportsInfo();
   }, []);
 
-  const handleDislike = async (sportId: string) => {
+  const handleDislike = async (sport: Sport) => {
     if (!currentUser) return;
     try {
+      const { idSport, strSport, strSportThumb } = sport;
       await updateDoc(doc(collection(firestore, "users"), currentUser.uid), {
-        dislikes: arrayUnion(sportId),
+        dislikes: arrayUnion({ idSport, strSport, strSportThumb }),
       });
     } catch (error) {
-      console.error("Error updating dislikes:", error);
+      console.error("Error updating likes:", error);
     }
   };
 
-  const handleLike = async (sportId: string) => {
+  const handleLike = async (sport: Sport) => {
     if (!currentUser) return;
     try {
+      const { idSport, strSport, strSportThumb } = sport;
       await updateDoc(doc(collection(firestore, "users"), currentUser.uid), {
-        likes: arrayUnion(sportId),
+        likes: arrayUnion({ idSport, strSport, strSportThumb }),
       });
     } catch (error) {
       console.error("Error updating likes:", error);
@@ -73,8 +79,12 @@ const Home: React.FC = () => {
   }
 
   return (
-    <main className="d-flex flex-column main-dark-background min-vh-100">
-      <div id="sportCarousel" className="carousel slide" data-bs-ride="carousel">
+    <main className ="d-flex flex-column main-dark-background min-vh-100">
+      <div
+        id="sportCarousel"
+        className="carousel slide"
+        data-bs-ride="carousel"
+      >
         <div className="carousel-inner">
           {sports.map((sport, index) => (
             <div
@@ -83,74 +93,66 @@ const Home: React.FC = () => {
             >
               <section
                 className="bg-image w-100 d-flex align-items-end mb-5 flex-column"
-                style={{ backgroundImage: `url('${sport.strSportThumb}')`, height: "80vh" }}
+                style={{
+                  backgroundImage: `url('${sport.strSportThumb}')`,
+                  height: "80vh",
+                }}
               >
-                <button className="me-auto ms-4 mt-4 main-dark-background border-0 rounded-2 py-2 px-3">
-                  <i className="fa-solid fa-sun main-ligth-text"></i>
-                </button>
+                
                 <h2 className="DMSans main-ligth-text me-auto mt-auto ms-4 mb-4">
                   {sport.strSport}
                 </h2>
               </section>
               <div className="mx-auto d-flex justify-content-center align-items-center mb-5">
-                  <button
-                    className="rounded-circle secondary-dark-background x-btn me-4 border-0"
-                    onClick={() => handleDislike(sport.idSport)}
-                  >
-                    <i className="fa-solid fa-xmark main-ligth-text fs-3"></i>
-                  </button>
-                  <button
-                    className="rounded-circle like-btn border-0"
-                    onClick={() => handleLike(sport.idSport)}
-                  >
-                    <i className="fa-solid fa-heart main-ligth-text fs-1"></i>
-                  </button>
-                </div>
+                <button
+                  className="rounded-circle secondary-dark-background x-btn me-4 border-0"
+                  type="button"
+                  data-bs-target="#sportCarousel"
+                  data-bs-slide="next"
+                  onClick={() => handleDislike(sport)}
+                >
+                  <i className="fa-solid fa-xmark main-ligth-text fs-3"></i>
+                </button>
+                <button
+                  className="rounded-circle like-btn border-0"
+                  type="button"
+                  data-bs-target="#sportCarousel"
+                  data-bs-slide="next"
+                  onClick={() => handleLike(sport)}
+                >
+                  <i className="fa-solid fa-heart main-ligth-text fs-1"></i>
+                </button>
+              </div>
             </div>
           ))}
         </div>
-        <button className="carousel-control-prev" type="button" data-bs-target="#sportCarousel" data-bs-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+        <button
+          className="carousel-control-prev"
+          type="button"
+          data-bs-target="#sportCarousel"
+          data-bs-slide="prev"
+        >
+          <span
+            className="carousel-control-prev-icon"
+            aria-hidden="true"
+          ></span>
           <span className="visually-hidden">Previous</span>
         </button>
-        <button className="carousel-control-next" type="button" data-bs-target="#sportCarousel" data-bs-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+        <button
+          className="carousel-control-next"
+          type="button"
+          data-bs-target="#sportCarousel"
+          data-bs-slide="next"
+        >
+          <span
+            className="carousel-control-next-icon"
+            aria-hidden="true"
+          ></span>
           <span className="visually-hidden">Next</span>
         </button>
       </div>
       <Panel />
     </main>
-    // <main className="d-flex flex-column main-dark-background min-vh-100">
-    //   {sports.map((sport) => (
-    //     <section
-    //       key={sport.idSport}
-    //       className="bg-image w-100 d-flex align-items-end mb-5 flex-column"
-    //       style={{ backgroundImage: `url('${sport.strSportThumb}')` }}
-    //     >
-    //       <button className="me-auto ms-4 mt-4 main-dark-background border-0 rounded-2 py-2 px-3">
-    //         <i className="fa-solid fa-sun main-ligth-text"></i>
-    //       </button>
-    //       <h2 className="DMSans main-ligth-text me-auto mt-auto ms-4 mb-4">
-    //         {sport.strSport}
-    //       </h2>
-    //     </section>
-    //   ))}
-    //   <div className="mx-auto d-flex justify-content-center align-items-center mb-5">
-    //     <button
-    //       className="rounded-circle secondary-dark-background x-btn me-4 border-0"
-    //       onClick={() => handleDislike(sports[0]?.idSport)}
-    //     >
-    //       <i className="fa-solid fa-xmark main-ligth-text fs-3"></i>
-    //     </button>
-    //     <button
-    //       className="rounded-circle like-btn border-0"
-    //       onClick={() => handleLike(sports[0]?.idSport)}
-    //     >
-    //       <i className="fa-solid fa-heart main-ligth-text fs-1"></i>
-    //     </button>
-    //   </div>
-    //   <Panel></Panel>
-    // </main>
   );
 };
 

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../authentication/authContext";
 import { firestore } from "../../firebase";
-import { fetchApi } from "../../api";
 import { doc, getDoc } from "firebase/firestore";
 import Panel from "../../templates/Panel/Panel";
 import { useNavigate } from "react-router-dom";
 import "./History.css";
-
 
 interface Sport {
   idSport: string;
@@ -29,13 +27,10 @@ const History: React.FC = () => {
           const userData = userDoc.data();
           const likes = userData.likes || [];
           const dislikes = userData.dislikes || [];
-    
-          // Pass likes and dislikes as arguments to fetchApi
-          const likedSportsData = await fetchApi(likes);
-          const dislikedSportsData = await fetchApi(dislikes);
-    
-          setLikedSports(likedSportsData);
-          setDislikedSports(dislikedSportsData);
+
+          // Assuming likes and dislikes are already in the correct format
+          setLikedSports(likes);
+          setDislikedSports(dislikes);
         }
       } catch (error) {
         console.error("Error fetching user sports:", error);
@@ -45,13 +40,12 @@ const History: React.FC = () => {
     fetchUserSports();
   }, [currentUser]);
 
-
-  const handleGoBack = async () => {
+  const handleGoBack = () => {
     navigate("/home");
   };
 
   return (
-    <main className="d-flex flex-column main-dark-background min-vh-100">
+    <main className="d-flex flex-column main-dark-background min-vh-100 main-history-page">
       <button
         className="main-dark-background me-auto mt-4 ms-4 border-0"
         onClick={handleGoBack}
@@ -65,9 +59,12 @@ const History: React.FC = () => {
         </h6>
         <p className="date"></p>
       </div>
-      <section>
-      {likedSports.map((sport) => (
-          <section key={sport.idSport} className="d-flex secondary-dark-background rounded-4 sport-card mx-auto">
+      <div>
+        {likedSports.map((sport) => (
+          <section
+            key={sport.idSport}
+            className="d-flex secondary-dark-background rounded-4 sport-card mx-auto mb-3"
+          >
             <div
               className="sport-img rounded-4 d-flex align-items-center ps-3"
               style={{ backgroundImage: `url('${sport.strSportThumb}')` }}
@@ -79,8 +76,13 @@ const History: React.FC = () => {
             </div>
           </section>
         ))}
+      </div>
+      <div>
         {dislikedSports.map((sport) => (
-          <section key={sport.idSport} className="d-flex secondary-dark-background rounded-4 sport-card mx-auto">
+          <section
+            key={sport.idSport}
+            className="d-flex secondary-dark-background rounded-4 sport-card mx-auto mb-3"
+          >
             <div
               className="sport-img rounded-4 d-flex align-items-center ps-3"
               style={{ backgroundImage: `url('${sport.strSportThumb}')` }}
@@ -92,8 +94,8 @@ const History: React.FC = () => {
             </div>
           </section>
         ))}
-      </section>
-      <Panel></Panel>
+      </div>
+      <Panel />
     </main>
   );
 };

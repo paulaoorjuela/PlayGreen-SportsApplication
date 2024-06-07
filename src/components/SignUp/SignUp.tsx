@@ -18,7 +18,7 @@ const SignUp: React.FC = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Store additional user information in Firestore
+      // Store user information in Firestore
       if (user) {
         await setDoc(doc(firestore, "users", user.uid), {
           email: email,
@@ -26,7 +26,6 @@ const SignUp: React.FC = () => {
           dislikes: []
         });
 
-        // Redirect to home page or any other page after successful signup
         navigate("/home");
       }
     } catch (error) {
